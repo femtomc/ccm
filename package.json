@@ -1,0 +1,80 @@
+{
+  "name": "ccm",
+  "displayName": "Claude Code Monitor",
+  "description": "Monitor Claude Code usage, tokens, and burn rate directly in VS Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ccm.showUsage",
+        "title": "Show Claude Usage",
+        "category": "Claude Code Monitor"
+      },
+      {
+        "command": "ccm.refreshUsage",
+        "title": "Refresh Usage Data",
+        "category": "Claude Code Monitor"
+      },
+      {
+        "command": "ccm.openSettings",
+        "title": "Open Settings",
+        "category": "Claude Code Monitor"
+      }
+    ],
+    "configuration": {
+      "title": "Claude Code Monitor",
+      "properties": {
+        "ccm.refreshInterval": {
+          "type": "number",
+          "default": 3,
+          "description": "Refresh interval in seconds for usage data updates"
+        },
+        "ccm.planType": {
+          "type": "string",
+          "enum": ["pro", "max5", "max20"],
+          "default": "pro",
+          "description": "Your Claude plan type"
+        },
+        "ccm.resetHour": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 23,
+          "description": "Hour when usage resets (0-23, UTC)"
+        },
+        "ccm.showInStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show token usage in status bar"
+        },
+        "ccm.warnThreshold": {
+          "type": "number",
+          "default": 0.8,
+          "minimum": 0.1,
+          "maximum": 1.0,
+          "description": "Warning threshold as percentage of limit (0.1-1.0)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4"
+  }
+}
